@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeaWeb", "TeaWeb\TeaWeb.csproj", "{8789F677-5D87-4AFC-A575-7E8D418BA05B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8789F677-5D87-4AFC-A575-7E8D418BA05B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8789F677-5D87-4AFC-A575-7E8D418BA05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8789F677-5D87-4AFC-A575-7E8D418BA05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8789F677-5D87-4AFC-A575-7E8D418BA05B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18B1335F-B35B-4343-BBAA-0DE4CCFE1D8A}
+	EndGlobalSection
+EndGlobal
