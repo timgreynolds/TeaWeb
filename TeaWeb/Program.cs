@@ -1,12 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using com.mahonkin.tim.TeaDataService.Services;
+using com.mahonkin.tim.TeaDataService.DataModel;
+using com.mahonkin.tim.TeaDataService.SqLite;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
-// Add services to the container.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddSingleton<IDataService<TeaModel>, TeaSqlService<TeaModel>>();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+WebApplication app = builder.Build();
 
 app.UseAuthorization();
 

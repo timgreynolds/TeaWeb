@@ -1,0 +1,83 @@
+﻿@page "/"
+@using com.mahonkin.tim.TeaDataService.DataModel;
+@using com.mahonkin.tim.TeaDataService.Services;
+@inject IDataService<TeaModel> SqlService;
+
+<PageTitle>Teas</PageTitle>
+
+<h1>Teas</h1>
+@if (teas == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm EditContext="@context" OnSubmit="@AddTea">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Brew Temperature</th>
+                    <th>Steep Time</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TeaModel tea in teas)
+                {
+                    <tr @onclick="() => EditTea(tea)">
+                        <td>@tea.Name</td>
+                        <td>@tea.BrewTemp</td>
+                        <td>@tea.SteepTime.ToString(@"mm\:ss")</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input id="teaName" name="teaName" placeholder="Tea Name" @bind="addTea.Name" /></td>
+                        <td><input id="teaBrewTemp" name="teaBrewTemp" placeholder="Brew Temp" @bind="addTea.BrewTemp" /></td>
+                        <td><input id="teaSteepTime" name="teaSteepTime" placeholder="Steep Time" @bind="addTea.SteepTime" /></td>
+                        <td><button type="submit">Add</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </EditForm>
+}
+@code {
+    private static List<TeaModel> teas = new List<TeaModel>();
+    private static TeaModel addTea = new TeaModel();
+    private static EditContext context = new EditContext(addTea);
+
+    protected override async Task OnInitializedAsync()
+    {
+        teas = await SqlService.GetAsync();
+        await base.OnInitializedAsync();
+    }
+
+    private void AddTea()
+    {
+        TeaModel tea;
+        try
+        {
+            tea = (TeaModel)context.Model;
+            TeaModel.ValidateTea(tea);
+            Console.WriteLine($"{tea.Name} {tea.SteepTime} {tea.BrewTemp}");
+        }
+        catch (ArgumentNullException exception)
+        {
+            ModelErrorCollection errors = new ModelErrorCollection();
+            errors.Add(new ModelError(exception));
+            Console.WriteLine(exception.Message);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception.Message);
+        }
+    }
+
+    private void EditTea(TeaModel tea)
+    {
+        Console.WriteLine($"{tea.Name} {tea.SteepTime.ToString(@"mm\:ss")} {tea.BrewTemp}");
+    }
+}
