@@ -3,14 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>com.mahonkin.tim.TeaUI</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\favicon.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Mahonkin.TeaDataService" Version="1.0.0-alpha6" />
+    <PackageReference Include="Mahonkin.TeaDataService" Version="1.0.0-alpha8" />
   </ItemGroup>
 </Project>
