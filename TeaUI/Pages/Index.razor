@@ -1,7 +1,7 @@
 ﻿@page "/"
-@using com.mahonkin.tim.TeaDataService.DataModel;
-@using com.mahonkin.tim.TeaDataService.Services;
-@inject IDataService<TeaModel> SqlService;
+@using com.mahonkin.tim.TeaDataService.DataModel
+@using com.mahonkin.tim.TeaDataService.Services
+@inject IDataService<TeaModel> DataService;
 
 <PageTitle>Teas</PageTitle>
 
@@ -26,9 +26,9 @@ else
             @foreach (TeaModel tea in teas)
             {
                 <tr>
-                    <td @onclick="async () => await EditTeaAsync(tea)">@tea.Name</td>
-                    <td @onclick="async () => await EditTeaAsync(tea)">@tea.BrewTemp</td>
-                    <td @onclick="async () => await EditTeaAsync(tea)">@tea.SteepTime.ToString(@"mm\:ss")</td>
+                    <td @onclick="() => EditTeaAsync(tea)">@tea.Name</td>
+                    <td @onclick="() => EditTeaAsync(tea)">@tea.BrewTemp</td>
+                    <td @onclick="() => EditTeaAsync(tea)">@tea.SteepTime.ToString(@"mm\:ss")</td>
                     <td><button @onclick="async () => await DeleteTeaAsync(tea)">Delete</button></td>
                 </tr>
             }
@@ -40,5 +40,9 @@ else
             </tr>
         </tbody>
     </table>
+    @if (ShowEditComponent)
+    {
+        <EditTea />
+    }
     @renderValidationErrors
 }

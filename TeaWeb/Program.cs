@@ -1,6 +1,6 @@
 ﻿using com.mahonkin.tim.TeaDataService.Services;
 using com.mahonkin.tim.TeaDataService.DataModel;
-using com.mahonkin.tim.TeaDataService.SqLite;
+using com.mahonkin.tim.TeaDataService.Services.TeaSqLiteService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
