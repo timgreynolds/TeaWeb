@@ -1,18 +1,18 @@
 ﻿using com.mahonkin.tim.TeaDataService.DataModel;
 using com.mahonkin.tim.TeaDataService.Services;
-using com.mahonkin.tim.TeaDataService.SqLite;
+using com.mahonkin.tim.TeaDataService.Services.TeaRestService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<IDataService<TeaModel>, TeaSqlService<TeaModel>>();
+builder.Services.AddSingleton<IDataService<TeaModel>, TeaRestService<TeaModel>>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

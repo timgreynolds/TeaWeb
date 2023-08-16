@@ -1,0 +1,23 @@
+﻿@page "/EditTea"
+@using com.mahonkin.tim.TeaDataService.DataModel
+@inject com.mahonkin.tim.TeaDataService.Services.IDataService<TeaModel> teaSqlService
+
+<h3>Edit Tea</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Brew Temperature</th>
+            <th>Steep Time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input id="teaName" name="teaName" placeholder="Tea Name" /></td>
+            <td><input id="teaBrewTemp" name="teaBrewTemp" placeholder="Brew Temp" /></td>
+            <td><input id="teaSteepTime" name="teaSteepTime" placeholder="Steep Time" /></td>
+            <td><button @onclick="async () => await teaSqlService.AddAsync(new TeaModel())">Save</button></td>
+        </tr>
+    </tbody>
+</table>

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace com.mahonkin.tim.TeaUI.Pages
 {
-    public partial class Index
+    public partial class Index : ComponentBase
     {
         private static RenderFragment? renderValidationErrors;
         private static List<TeaModel> teas = new List<TeaModel>();
@@ -14,15 +14,18 @@ namespace com.mahonkin.tim.TeaUI.Pages
         private static string teaSteepTime = "02:00";
         private static int teaBrewTemp = 212;
 
+        public bool ShowEditComponent = false;
+
         protected override async Task OnInitializedAsync()
         {
-            teas = await SqlService.GetAsync();
+            DataService.Initialize();
+            teas = await DataService.GetAsync();
             await base.OnInitializedAsync();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            teas = await SqlService.GetAsync();
+            teas = await DataService.GetAsync();
             renderValidationErrors = null;
             await base.OnAfterRenderAsync(firstRender);
         }
@@ -31,7 +34,7 @@ namespace com.mahonkin.tim.TeaUI.Pages
         {
             try
             {
-                TeaModel newTea = await SqlService.AddAsync(new TeaModel(teaName, teaSteepTime, teaBrewTemp));
+                TeaModel newTea = await DataService.AddAsync(new TeaModel(teaName, teaSteepTime, teaBrewTemp));
             }
             catch (Exception exception)
             {
@@ -39,23 +42,23 @@ namespace com.mahonkin.tim.TeaUI.Pages
             }
             finally
             {
-                teas = await SqlService.GetAsync();
+                teas = await DataService.GetAsync();
                 teaName = string.Empty;
                 teaBrewTemp = 212;
                 teaSteepTime = "02:00";
             }
         }
 
-        private async Task EditTeaAsync(TeaModel tea)
+        private void EditTeaAsync(TeaModel tea)
         {
-            await Task.Run(() => Console.WriteLine(tea.Name));
+            ShowEditComponent = true;
         }
 
         private async Task DeleteTeaAsync(TeaModel tea)
         {
             try
             {
-                if (await SqlService.DeleteAsync(tea) == false)
+                if (await DataService.DeleteAsync(tea) == false)
                 {
                     throw new ApplicationException("Tea could not be deleted.");
                 }
@@ -66,7 +69,7 @@ namespace com.mahonkin.tim.TeaUI.Pages
             }
             finally
             {
-                teas = await SqlService.GetAsync();
+                teas = await DataService.GetAsync();
             }
         }
 
