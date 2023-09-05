@@ -18,23 +18,52 @@ namespace com.mahonkin.tim.TeaUI.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            DataService.Initialize();
-            teas = await DataService.GetAsync();
-            await base.OnInitializedAsync();
+            try
+            {
+                DataService.Initialize();
+                teas = await DataService.GetAsync();
+            }
+            catch (Exception exception)
+            {
+                RenderException(exception);
+            }
+            finally
+            {
+                await base.OnInitializedAsync();
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            teas = await DataService.GetAsync();
             renderValidationErrors = null;
-            await base.OnAfterRenderAsync(firstRender);
+            try
+            {
+                teas = await DataService.GetAsync();
+            }
+            catch (Exception exception)
+            {
+                RenderException(exception);
+            }
+            finally
+            {
+                await base.OnAfterRenderAsync(firstRender);
+            }
         }
 
         private async Task AddTeaAsync()
         {
             try
             {
-                TeaModel newTea = await DataService.AddAsync(new TeaModel(teaName, teaSteepTime, teaBrewTemp));
+                if (string.IsNullOrWhiteSpace(teaName))
+                {
+                    throw new ArgumentNullException(nameof(teaName), "Tea must have a name.");
+                }
+                if (TimeSpan.TryParseExact(teaSteepTime, @"m\:ss", null, out TimeSpan steepTime) == false)
+                {
+                    throw new ArgumentException("Could not parse the specified steep time.", nameof(teaSteepTime));
+                }
+                TeaModel newTea = new TeaModel(teaName, steepTime, teaBrewTemp);
+                newTea = await DataService.AddAsync(newTea);
             }
             catch (Exception exception)
             {
@@ -51,6 +80,7 @@ namespace com.mahonkin.tim.TeaUI.Pages
 
         private void EditTeaAsync(TeaModel tea)
         {
+            EditTea.SelectedTea = tea;
             ShowEditComponent = true;
         }
 

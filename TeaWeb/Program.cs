@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IDataService<TeaModel>, TeaSqlService<TeaModel>>();
+builder.Services.AddSingleton<IDataService<TeaModel>, TeaSqlService>();
 
 WebApplication app = builder.Build();
 

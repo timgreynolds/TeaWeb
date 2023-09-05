@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using com.mahonkin.tim.TeaDataService.Services;
 using com.mahonkin.tim.TeaDataService.DataModel;
+using com.mahonkin.tim.TeaDataService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace com.mahonkin.tim.TeaApi.Controllers
@@ -28,15 +29,30 @@ namespace com.mahonkin.tim.TeaApi.Controllers
         [HttpGet("{id}"), ActionName("GetTea")]
         public async Task<IActionResult> GetTea(int id)
         {
-            TeaModel tea = await _dataService.FindByIdAsync(id);
-            return new OkObjectResult(new[] { tea });
+            try
+            {
+                TeaModel tea = await _dataService.FindByIdAsync(id);
+                return new OkObjectResult(new[] { tea });
+            }
+            catch (Exception ex)
+            {
+                return new NotFoundObjectResult(ex);
+            }
         }
 
         [HttpPost, ActionName("AddTea")]
         public async Task<IActionResult> AddTea([FromBody] TeaModel value)
         {
-            TeaModel tea = await _dataService.AddAsync(value);
-            return new OkObjectResult(new[] { tea });
+            try
+            {
+                TeaModel tea = await _dataService.AddAsync(value);
+                return new OkObjectResult(tea);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred. {ex.Message}");
+                return new BadRequestObjectResult(ex);
+            } 
         }
 
         [HttpPut(), ActionName("UpdateTea")]

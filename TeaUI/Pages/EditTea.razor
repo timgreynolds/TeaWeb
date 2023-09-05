@@ -14,10 +14,10 @@
     </thead>
     <tbody>
         <tr>
-            <td><input id="teaName" name="teaName" placeholder="Tea Name" /></td>
-            <td><input id="teaBrewTemp" name="teaBrewTemp" placeholder="Brew Temp" /></td>
-            <td><input id="teaSteepTime" name="teaSteepTime" placeholder="Steep Time" /></td>
-            <td><button @onclick="async () => await teaSqlService.AddAsync(new TeaModel())">Save</button></td>
+            <td><input id="teaName" name="teaName" placeholder="Tea Name" @bind="@SelectedTea.Name" /></td>
+            <td><input id="teaBrewTemp" name="teaBrewTemp" placeholder="Brew Temp" @bind="@SelectedTea.BrewTemp" /></td>
+            <td><input id="teaSteepTime" name="teaSteepTime" placeholder="Steep Time" @bind="@SelectedTea.SteepTime" /></td>
+            <td><button @onclick="async () => await teaSqlService.UpdateAsync(SelectedTea)">Update</button></td>
         </tr>
     </tbody>
 </table>

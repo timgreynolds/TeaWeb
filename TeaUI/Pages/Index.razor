@@ -7,7 +7,7 @@
 
 <h1>Teas</h1>
 @if (teas == null)
-{
+    {
     <p><em>Loading...</em></p>
 }
 else
@@ -24,7 +24,7 @@ else
 
         <tbody>
             @foreach (TeaModel tea in teas)
-            {
+                {
                 <tr>
                     <td @onclick="() => EditTeaAsync(tea)">@tea.Name</td>
                     <td @onclick="() => EditTeaAsync(tea)">@tea.BrewTemp</td>
@@ -33,16 +33,16 @@ else
                 </tr>
             }
             <tr>
-                <td><input id="teaName" name="teaName" placeholder="Tea Name" @bind="teaName" /></td>
+                <td><input id="teaName" name="teaName" placeholder="Tea Name" @bind="teaName"/></td>
                 <td><input id="teaBrewTemp" name="teaBrewTemp" placeholder="Brew Temp" @bind="teaBrewTemp" /></td>
                 <td><input id="teaSteepTime" name="teaSteepTime" placeholder="Steep Time" @bind="teaSteepTime" /></td>
-                <td><button @onclick="@AddTeaAsync">Add</button></td>
+                <td><button id="addBtn" name="addBtn" @onclick="async () => await AddTeaAsync()">Add</button></td>
             </tr>
         </tbody>
     </table>
     @if (ShowEditComponent)
     {
-        <EditTea />
+            <EditTea />
     }
     @renderValidationErrors
 }
