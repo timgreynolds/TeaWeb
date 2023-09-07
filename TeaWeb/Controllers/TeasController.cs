@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using com.mahonkin.tim.TeaDataService.DataModel;
 using com.mahonkin.tim.TeaDataService.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace com.mahonkin.tim.TeaApi.Controllers
 {
@@ -13,15 +14,18 @@ namespace com.mahonkin.tim.TeaApi.Controllers
     public class TeasController : ControllerBase
     {
         private IDataService<TeaModel> _dataService;
-
-        public TeasController(IDataService<TeaModel> dataService)
+        private ILogger _logger;
+        
+        public TeasController(IDataService<TeaModel> dataService, ILoggerFactory loggerFactory)
         {
             _dataService = dataService;
+            _logger = loggerFactory.CreateLogger<TeasController>();
         }
 
         [HttpGet, ActionName("GetTeas")]
         public async Task<IActionResult> GetTeas()
         {
+            _logger.LogInformation($"Entering action: { nameof(GetTeas) }");
             List<TeaModel> teas = await _dataService.GetAsync();
             return new OkObjectResult(teas);
         }
@@ -29,13 +33,20 @@ namespace com.mahonkin.tim.TeaApi.Controllers
         [HttpGet("{id}"), ActionName("GetTea")]
         public async Task<IActionResult> GetTea(int id)
         {
+            _logger.LogInformation($"Entering action: {nameof(GetTea)}");
             try
             {
                 TeaModel tea = await _dataService.FindByIdAsync(id);
+                if (tea is null)
+                {
+                    _logger.LogWarning($" No tea found with ID {id}");
+                    return new NotFoundObjectResult($"No tea found with ID {id}");
+                }
                 return new OkObjectResult(new[] { tea });
             }
             catch (Exception ex)
             {
+                _logger.LogError($"{ex.Message}");
                 return new NotFoundObjectResult(ex);
             }
         }
@@ -43,6 +54,8 @@ namespace com.mahonkin.tim.TeaApi.Controllers
         [HttpPost, ActionName("AddTea")]
         public async Task<IActionResult> AddTea([FromBody] TeaModel value)
         {
+            _logger.LogInformation($"Entering action: {nameof(AddTea)}");
+            _logger.LogInformation($"Value from body: {value}");
             try
             {
                 TeaModel tea = await _dataService.AddAsync(value);
@@ -50,6 +63,7 @@ namespace com.mahonkin.tim.TeaApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 Console.WriteLine($"An error occurred. {ex.Message}");
                 return new BadRequestObjectResult(ex);
             } 
@@ -58,6 +72,7 @@ namespace com.mahonkin.tim.TeaApi.Controllers
         [HttpPut(), ActionName("UpdateTea")]
         public async Task<IActionResult> UpdateTea([FromBody] TeaModel value)
         {
+            _logger.LogInformation($"Entering action: {nameof(UpdateTea)}");
             TeaModel tea = await _dataService.UpdateAsync(value);
             return new OkObjectResult(tea);
         }
@@ -65,6 +80,7 @@ namespace com.mahonkin.tim.TeaApi.Controllers
         [HttpDelete(), ActionName("DeleteTea")]
         public async Task<IActionResult> DeleteTea([FromBody] TeaModel value)
         {
+            _logger.LogInformation($"Entering action: {nameof(DeleteTea)}");
             return new OkObjectResult(await _dataService.DeleteAsync(value));
         }
     }
