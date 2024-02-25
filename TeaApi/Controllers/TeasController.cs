@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using com.mahonkin.tim.TeaDataService.DataModel;
 using com.mahonkin.tim.TeaDataService.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace com.mahonkin.tim.TeaApi.Controllers
@@ -13,12 +14,13 @@ namespace com.mahonkin.tim.TeaApi.Controllers
     [Route("api/[controller]")]
     public class TeasController : ControllerBase
     {
-        private IDataService<TeaModel> _dataService;
-        private ILogger _logger;
+        private readonly IDataService<TeaModel> _dataService;
+        private readonly ILogger _logger;
         
-        public TeasController(IDataService<TeaModel> dataService, ILoggerFactory loggerFactory)
+        public TeasController(IDataService<TeaModel> dataService, ILoggerFactory loggerFactory, IConfiguration configuration)
         {
             _dataService = dataService;
+            _dataService.Initialize(configuration.GetConnectionString("SqliteDB") ?? String.Empty);
             _logger = loggerFactory.CreateLogger<TeasController>();
         }
 
