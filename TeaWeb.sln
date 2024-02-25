@@ -1,9 +1,9 @@
-﻿
+???
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1706.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeaApi", "TeaWeb\TeaApi.csproj", "{8789F677-5D87-4AFC-A575-7E8D418BA05B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeaApi", "TeaApi\TeaApi.csproj", "{8789F677-5D87-4AFC-A575-7E8D418BA05B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeaUI", "TeaUI\TeaUI.csproj", "{AE098C8F-6F04-45FD-8337-B6DEB1E7D6A8}"
 EndProject

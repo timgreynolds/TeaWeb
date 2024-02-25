@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using com.mahonkin.tim.TeaDataService.DataModel;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace com.mahonkin.tim.TeaUI.Pages
 {
@@ -20,7 +22,9 @@ namespace com.mahonkin.tim.TeaUI.Pages
         {
             try
             {
-                DataService.Initialize();
+                string teaUrl = Config.GetConnectionString("TeaApiUrl") ?? "http://localhost/api";
+                Logger.LogDebug($"Initializing URI {teaUrl}");
+                DataService.Initialize(teaUrl.ToString());
                 teas = await DataService.GetAsync();
             }
             catch (Exception exception)

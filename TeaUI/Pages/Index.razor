@@ -2,29 +2,31 @@
 @using com.mahonkin.tim.TeaDataService.DataModel
 @using com.mahonkin.tim.TeaDataService.Services
 @inject IDataService<TeaModel> DataService;
+@inject ILogger<Index> Logger;
+@inject IConfiguration Config;
 
 <PageTitle>Teas</PageTitle>
 
 <h1>Teas</h1>
 @if (teas == null)
-    {
+{
     <p><em>Loading...</em></p>
 }
 else
 {
     <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Brew Temperature</th>
-                <th>Steep Time</th>
-                <th></th>
-            </tr>
-        </thead>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Brew Temperature</th>
+            <th>Steep Time</th>
+            <th></th>
+        </tr>
+    </thead>
 
-        <tbody>
-            @foreach (TeaModel tea in teas)
-                {
+    <tbody>
+        @foreach (TeaModel tea in teas)
+            {
                 <tr>
                     <td @onclick="() => EditTeaAsync(tea)">@tea.Name</td>
                     <td @onclick="() => EditTeaAsync(tea)">@tea.BrewTemp</td>
@@ -33,7 +35,7 @@ else
                 </tr>
             }
             <tr>
-                <td><input id="teaName" name="teaName" placeholder="Tea Name" @bind="teaName"/></td>
+                <td><input id="teaName" name="teaName" placeholder="Tea Name" @bind="teaName" /></td>
                 <td><input id="teaBrewTemp" name="teaBrewTemp" placeholder="Brew Temp" @bind="teaBrewTemp" /></td>
                 <td><input id="teaSteepTime" name="teaSteepTime" placeholder="Steep Time" @bind="teaSteepTime" /></td>
                 <td><button id="addBtn" name="addBtn" @onclick="async () => await AddTeaAsync()">Add</button></td>
@@ -42,7 +44,7 @@ else
     </table>
     @if (ShowEditComponent)
     {
-            <EditTea />
+        <EditTea />
     }
     @renderValidationErrors
 }
