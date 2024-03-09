@@ -1,12 +1,12 @@
 ﻿using com.mahonkin.tim.TeaDataService.Services;
 using com.mahonkin.tim.TeaDataService.DataModel;
 using com.mahonkin.tim.TeaDataService.Services.TeaSqLiteService;
-using com.mahonkin.tim.logging.UnifiedLogging.Extensions;
+using com.github.timgreynolds.logging.UnifiedLogging.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace com.mahonkin.tim.TeaWeb.TeaApi;
+namespace com.github.timgreynolds.TeaApi;
 
 public class Program
 {
@@ -18,6 +18,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Logging.ClearProviders()
             .AddConsole()
+            .AddDebug()
             .AddUnifiedLogger();
         
         WebApplication app = builder.Build();

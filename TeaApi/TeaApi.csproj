@@ -16,6 +16,6 @@
   <ItemGroup>
     <PackageReference Include="Mahonkin.TeaDataService" Version="1.3.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.*" />
-    <PackageReference Include="Mahonkin.UnifiedLogging" Version="0.0.45" />
+    <PackageReference Include="Mahonkin.UnifiedLogging" Version="1.0.0-rc3" />
   </ItemGroup>
 </Project>
