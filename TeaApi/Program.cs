@@ -1,12 +1,12 @@
 ﻿using com.mahonkin.tim.TeaDataService.Services;
 using com.mahonkin.tim.TeaDataService.DataModel;
 using com.mahonkin.tim.TeaDataService.Services.TeaSqLiteService;
-using com.github.timgreynolds.logging.UnifiedLogging.Extensions;
+using com.mahonkin.tim.logging.UnifiedLogging.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace com.github.timgreynolds.TeaApi;
+namespace com.mahonkin.tim.TeaApi;
 
 public class Program
 {
